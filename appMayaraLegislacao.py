@@ -5,17 +5,17 @@ PF002
 
 Objetivos:
 - Facilitar a consulta comparativa de leis a partir do texto obtido pela web
-- Indicar a correspondência dos artigos entre as leis, para facilitar a pesquisa dos advogados que trabalham com o tema.
+- Indicar a correspondência dos artigos entre a lei nova e as leis antigas, para facilitar a pesquisa dos advogados que trabalham com o tema.
 Por exemplo, a pessoa indicaria o art. 10 da lei nova e o programa indicaria quais artigos das outras leis seriam correspondentes e também informaria se não existe correspondência.
 '''
 
 import requests
 from bs4 import BeautifulSoup
 
-url0 = 'sites/L10520.htm'
-url1 = 'sites/L12462compilado.htm'
-url2 = 'sites/L14133.htm'
-url3 = 'sites/L8666compilado.htm'
+url0 = 'sites/L14133.htm' # Nova Lei de Licitações e Contratos Administrativos (lei principal)
+url1 = 'sites/L8666compilado.htm' # Antiga Lei de Licitações e Contratos Administrativos
+url2 = 'sites/L10520.htm' # Antiga Lei do Pregão
+url3 = 'sites/L12462compilado.htm' # Antiga Lei do RDC
 
 def get_text(url):
     """
@@ -55,13 +55,9 @@ def get_arts(text):
         artigos[chave].append(item)
     return artigos
 
-arts0 = get_arts(text0)
-arts1 = get_arts(text1)
-arts2 = get_arts(text2)
-arts3 = get_arts(text3)
+lei14133 = get_arts(text0)
+lei8666 = get_arts(text1)
+lei10520 = get_arts(text2)
+lei12462 = get_arts(text3)
 
-for i in arts0['Art1']:
-    print(i)
-print('************ Segunda lei ****************')
-for i in arts1['Art1']:
-    print(i)
+relacoes = {'lei14133["Art0"]': {'lei8666["Art10"]':lei8666['Art10'],'lei8666["Art1"]':lei8666['Art1']}}
